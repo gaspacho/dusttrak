@@ -1,0 +1,5 @@
+En la db adjunta hay una tabla que se llama historical, actualmente hay cierta
+cantidad de datos cargados:
+
+historial_id | grd_id | register_type | timestamp | addres | value | historical_type | insertion_time
+26596
