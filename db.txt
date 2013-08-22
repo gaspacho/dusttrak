@@ -1,0 +1,3 @@
+db_name grdxf
+db_user grdxf
+table_name historical

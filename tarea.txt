@@ -1,5 +1,115 @@
 En la db adjunta hay una tabla que se llama historical, actualmente hay cierta
-cantidad de datos cargados:
+cantidad de datos cargados.
 
-historial_id | grd_id | register_type | timestamp | addres | value | historical_type | insertion_time
-26596
+De la tabla nos interesan 3 columnas:
+
+grd_id, timestamp y value
+
+
+
+
+grd es un dispositivo que por un entrada analogica recibe un valor numerico (value) y mediante 3g lo almacena en una base de datos, cada equipo tiene un id (grd_id).
+
+Lo que hay que haces es una aplicacion que haga una consulta a esta db, genere una tabla con las 3 columnas antes mencionadas y se tienen que aplicar las siguientes reglas:
+
+
+- filtrar por rango de tiempo
+- filtrar por grd_id
+
+Los datos tomados a partir de esa consulta de manera opcional deben ser procesados de la siguiente manera:
+
+- mostrar un promedio de cada X minutos dentro del rango de tiempo seleccionado, X se debe poder cambiarlo el usuario.
+- mostrar todos los valores (sin promediar) que esten por encima de un valor determinado (umbral), este umbral tambien se tiene que modificar por el usuario.
+- mostrar todos los valores sin promediar, resaltando con color las filas que esten por encima del umbral.
+
+
+um ejemplo de tabla de promedios de 15 minutos
+
+ID	|		TIMESTAMP		|	mG
+10	|      25/03 15:00 a 25/03 15:15	|    0.02mG/m3
+10	|      25/03 15:15 a 25/03 15:30	|    0.02mG/m3
+
+
+ejemplo de tabla por encima de umbral sin promediar
+
+ID	|	TIMESTAMP	|	mG
+10	|      25/03 16:00	|   1.00mG/m3
+10	|      25/03 16:02	|   1.00mG/m3
+10	|      25/03 16:04	|   1.00mG/m3
+
+ejemplo de tabla de  sin promediar de todos los datos resaltando filas por encima de umbral
+
+ID	|	TIMESTAMP	|	mG
+10	|      25/03 16:00	|   0.02mG/m3
+10	|      25/03 16:02	|   0.03mG/m3
+10	|      25/03 16:04	|   0.50mG/m3
+10	|      25/03 16:06	|   1.00mG/m3***
+10	|      25/03 16:08	|   1.00mG/m3***
+10	|      25/03 16:10	|   0.30mG/m3
+
+
+La mecanica del dispositivo es la siguiente:
+
+El equipo de medicion (dusttrak) toma muestras de aire y determina la cantidad de particulas en mG/m3, por una salida analogica envia una corriente (A), otro dispositivo (grd) toma 
+ese valor electrico y lo almacena en una db (value).
+El valor electrico esta en µA y hay que convertirlo nuevamente a mG/m3, esta determinado cuantos µA es igual a 0mG/m3:
+
++-4000µA = 0mG/m3
++-20000µA = 5mG/m3
+
+
+
+Para hacer la conversion la formula es la siguiente:
+
+
+      I - F
+C =  --------
+        E
+
+C  =  Concentracion en mG/m3
+I  =  Corriente en µA (value)
+F  =  Factor de correccion
+E  =  Escala
+(todos esot valores se deben poder cambiar por el usuario)
+
+Para determinar F  se pone el aparato con un filtro especial que hace que la muestra de aire no contenga particulas, y se toma con un amperimetro el valor electrico para ese 0mG/m3, 
+lo ideal es 4mA pero la realidad es que anda entre los 4.020mA y los 3.990mA, ademas cuando pasa por el grd suele sufrir una caida de corriente que anda entre los 0.001mA a los 0.050mA.
+Sabiendo eso hay que establecer un factor de correcion.
+
+
+
+
+Como determinamos E:
+
+      R
+E = ------
+      Fs
+
+R   =  Rango entre el 0 y el Fs (µA)
+Fs  =  Fondo de escala (5000µG/m3)
+
+
+Entonces 
+
+  16000µA
+ --------- = 3.2µA/µG/m3
+  5000µG
+
+
+Conversion de ejemplo
+
+I  =  4135µA (tomado de 'value')
+F  =  3992µA (tomado con amperimetro poniendo el exemys en 0mG/m3)
+E  =  3.2µA/µG/m3
+
+4135µA - 3992µA 
+--------------- =  44.68µG/m3 = 0.044mG/m3
+   3.2µA/µG/m3
+
+
+
+
+
+
+En fin, toda la parte de calculo se deberia poder parametrizar desde un panel de control.
+
