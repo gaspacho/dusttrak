@@ -117,3 +117,19 @@ En este caso E siempre sera 3.2µA/µG/m3
 F se toma en el momento de ponerlo en marcha y despues queda constante, cuando se hace uan calibracion cada 3 meses hay que volver a tomar el 0, por eso es importante poder modificar 
 ese valor.
 
+
+Manejo de errores:
+
+debe de poder visualizarse algunos mensajes de error en las siguientes situaciones
+
+si por ejemplo, determinamos que 0mg = 3992µA y 'value' esta por debajo, por ejemplo 3989, estariamos en un valor negativo, y no hay masa negativa (a menos que sea antimateria(?)), 
+entonces si 0 = 3992µA y 'value' esta entre 3991µA y 3900µA el mensaje podria ser "recalibrar 0".
+Ahora s iesta por debajo de 3900µA estaria ocurriendo algo mas "grave" y no solo haberse corrido el 0, entonces el mensaje seria "HORROR! verifique equipo"
+
+
+
+
+
+
+
+
