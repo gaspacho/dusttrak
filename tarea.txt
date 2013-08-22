@@ -113,3 +113,7 @@ E  =  3.2µA/µG/m3
 
 En fin, toda la parte de calculo se deberia poder parametrizar desde un panel de control.
 
+En este caso E siempre sera 3.2µA/µG/m3
+F se toma en el momento de ponerlo en marcha y despues queda constante, cuando se hace uan calibracion cada 3 meses hay que volver a tomar el 0, por eso es importante poder modificar 
+ese valor.
+
