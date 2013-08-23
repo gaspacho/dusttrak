@@ -1,5 +1,5 @@
-En la db adjunta hay una tabla que se llama historical, actualmente hay cierta
-cantidad de datos cargados.
+En la db adjunta hay una tabla que se llama historical, actualmente hay
+cierta cantidad de datos cargados.
 
 De la tabla nos interesan 3 columnas:
 
@@ -8,19 +8,31 @@ grd_id, timestamp y value
 
 
 
-grd es un dispositivo que por un entrada analogica recibe un valor numerico (value) y mediante 3g lo almacena en una base de datos, cada equipo tiene un id (grd_id).
+grd es un dispositivo que por un entrada analogica recibe un valor
+numerico (value) y mediante 3g lo almacena en una base de datos, cada
+equipo tiene un id (grd_id).
 
-Lo que hay que haces es una aplicacion que haga una consulta a esta db, genere una tabla con las 3 columnas antes mencionadas y se tienen que aplicar las siguientes reglas:
+Lo que hay que haces es una aplicacion que haga una consulta a esta db,
+genere una tabla con las 3 columnas antes mencionadas y se tienen que
+aplicar las siguientes reglas:
 
 
 - filtrar por rango de tiempo
 - filtrar por grd_id
 
-Los datos tomados a partir de esa consulta de manera opcional deben ser procesados de la siguiente manera:
+Los datos tomados a partir de esa consulta de manera opcional deben ser
+procesados de la siguiente manera:
 
-- mostrar un promedio de cada X minutos dentro del rango de tiempo seleccionado, X se debe poder cambiarlo el usuario.
-- mostrar todos los valores (sin promediar) que esten por encima de un valor determinado (umbral), este umbral tambien se tiene que modificar por el usuario.
-- mostrar todos los valores sin promediar, resaltando con color las filas que esten por encima del umbral.
+- mostrar un promedio de cada X minutos dentro del rango de tiempo
+  seleccionado, X se debe poder cambiarlo el usuario.
+
+- mostrar todos los valores (sin promediar) que esten por encima de un
+  valor determinado (umbral), este umbral tambien se tiene que modificar
+  por el usuario.
+
+- mostrar todos los valores sin promediar, resaltando con color las
+  filas que esten por encima del umbral.
+
 
 
 um ejemplo de tabla de promedios de 15 minutos
@@ -37,7 +49,8 @@ ID	|	TIMESTAMP	|	mG
 10	|      25/03 16:02	|   1.00mG/m3
 10	|      25/03 16:04	|   1.00mG/m3
 
-ejemplo de tabla de  sin promediar de todos los datos resaltando filas por encima de umbral
+ejemplo de tabla de sin promediar de todos los datos resaltando filas
+por encima de umbral
 
 ID	|	TIMESTAMP	|	mG
 10	|      25/03 16:00	|   0.02mG/m3
@@ -50,9 +63,13 @@ ID	|	TIMESTAMP	|	mG
 
 La mecanica del dispositivo es la siguiente:
 
-El equipo de medicion (dusttrak) toma muestras de aire y determina la cantidad de particulas en mG/m3, por una salida analogica envia una corriente (A), otro dispositivo (grd) toma 
-ese valor electrico y lo almacena en una db (value).
-El valor electrico esta en µA y hay que convertirlo nuevamente a mG/m3, esta determinado cuantos µA es igual a 0mG/m3:
+El equipo de medicion (dusttrak) toma muestras de aire y determina la
+cantidad de particulas en mG/m3, por una salida analogica envia una
+corriente (A), otro dispositivo (grd) toma ese valor electrico y lo
+almacena en una db (value).
+
+El valor electrico esta en µA y hay que convertirlo nuevamente a mG/m3,
+esta determinado cuantos µA es igual a 0mG/m3:
 
 +-4000µA = 0mG/m3
 +-20000µA = 5mG/m3
@@ -72,9 +89,12 @@ F  =  Factor de correccion
 E  =  Escala
 (todos esot valores se deben poder cambiar por el usuario)
 
-Para determinar F  se pone el aparato con un filtro especial que hace que la muestra de aire no contenga particulas, y se toma con un amperimetro el valor electrico para ese 0mG/m3, 
-lo ideal es 4mA pero la realidad es que anda entre los 4.020mA y los 3.990mA, ademas cuando pasa por el grd suele sufrir una caida de corriente que anda entre los 0.001mA a los 0.050mA.
-Sabiendo eso hay que establecer un factor de correcion.
+Para determinar F se pone el aparato con un filtro especial que hace que
+la muestra de aire no contenga particulas, y se toma con un amperimetro
+el valor electrico para ese 0mG/m3, lo ideal es 4mA pero la realidad es
+que anda entre los 4.020mA y los 3.990mA, ademas cuando pasa por el grd
+suele sufrir una caida de corriente que anda entre los 0.001mA a los
+0.050mA.  Sabiendo eso hay que establecer un factor de correcion.
 
 
 
@@ -111,25 +131,25 @@ E  =  3.2µA/µG/m3
 
 
 
-En fin, toda la parte de calculo se deberia poder parametrizar desde un panel de control.
+En fin, toda la parte de calculo se deberia poder parametrizar desde un
+panel de control.
 
-En este caso E siempre sera 3.2µA/µG/m3
-F se toma en el momento de ponerlo en marcha y despues queda constante, cuando se hace uan calibracion cada 3 meses hay que volver a tomar el 0, por eso es importante poder modificar 
-ese valor.
+En este caso E siempre sera 3.2µA/µG/m3 F se toma en el momento de
+ponerlo en marcha y despues queda constante, cuando se hace uan
+calibracion cada 3 meses hay que volver a tomar el 0, por eso es
+importante poder modificar ese valor.
 
 
 Manejo de errores:
 
-debe de poder visualizarse algunos mensajes de error en las siguientes situaciones
+debe de poder visualizarse algunos mensajes de error en las siguientes
+situaciones
 
-si por ejemplo, determinamos que 0mg = 3992µA y 'value' esta por debajo, por ejemplo 3989, estariamos en un valor negativo, y no hay masa negativa (a menos que sea antimateria(?)), 
-entonces si 0 = 3992µA y 'value' esta entre 3991µA y 3900µA el mensaje podria ser "recalibrar 0".
-Ahora s iesta por debajo de 3900µA estaria ocurriendo algo mas "grave" y no solo haberse corrido el 0, entonces el mensaje seria "HORROR! verifique equipo"
-
-
-
-
-
-
-
+si por ejemplo, determinamos que 0mg = 3992µA y 'value' esta por debajo,
+por ejemplo 3989, estariamos en un valor negativo, y no hay masa
+negativa (a menos que sea antimateria(?)), entonces si 0 = 3992µA y
+'value' esta entre 3991µA y 3900µA el mensaje podria ser "recalibrar 0".
+Ahora s iesta por debajo de 3900µA estaria ocurriendo algo mas "grave"
+y no solo haberse corrido el 0, entonces el mensaje seria "HORROR!
+verifique equipo"
 
