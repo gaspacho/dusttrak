@@ -40,7 +40,8 @@ end
 # Add your after (RE)load hooks here
 #
 Padrino.after_load do
-  ActiveRecord::Base.auto_upgrade!
+# MiniRecord
+#  ActiveRecord::Base.auto_upgrade!
 end
 
 Padrino.load!
