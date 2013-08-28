@@ -15,7 +15,7 @@ gem 'rake'
 
 # Component requirements
 gem 'haml'
-gem 'mini_record'
+gem 'activerecord', :require => 'active_record'
 gem 'mysql2'
 
 # Test requirements
