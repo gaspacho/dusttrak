@@ -1,7 +1,7 @@
 class CreateConfiguraciones < ActiveRecord::Migration
   def up
     create_table :configuraciones do |t|
-      t.string :atributo
+      t.string  :atributo
       t.string  :valor
     end
   end
