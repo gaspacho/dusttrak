@@ -1,4 +1,6 @@
 class Historical < ActiveRecord::Base
+  self.table_name = 'historical'
+
   property :historial_id, :as => :integer
   property :grd_id, :as => :integer
   property :register_type, :as => :integer
