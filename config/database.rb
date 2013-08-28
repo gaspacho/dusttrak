@@ -2,12 +2,12 @@ ActiveRecord::Base.configurations[:development] = {
   :adapter   => 'mysql2',
   :encoding  => 'utf8',
   :reconnect => true,
-  :database  => 'dusttrak_development',
+  :database  => 'grdxf',
   :pool      => 5,
-  :username  => 'root',
-  :password  => '',
+  :username  => 'dusttrak',
+  :password  => 'hola',
   :host      => 'localhost',
-  :socket    => '/tmp/mysql.sock'
+  :socket    => '/run/mysqld/mysqld.sock'
 
 }
 
