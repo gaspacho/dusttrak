@@ -16,6 +16,7 @@ class Historical < ActiveRecord::Base
   end
 
   def self.sobre_umbral
+    # dependiente de mysql
     mas_concentracion.having 'concentracion > ?', C.umbral
   end
 
