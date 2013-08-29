@@ -34,6 +34,10 @@ Bundler.require(:default, PADRINO_ENV)
 # Add your before (RE)load hooks here
 #
 Padrino.before_load do
+  # Más general que `table_name`
+  ActiveSupport::Inflector.inflections do |i|
+    i.irregular 'configuracion', 'configuraciones'
+  end
 end
 
 ##
