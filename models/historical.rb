@@ -15,7 +15,15 @@ class Historical < ActiveRecord::Base
     group("(60/#{x}) * hour(`timestamp`) + floor(minute(`timestamp`) / #{x})")
   end
 
+  def self.sobre_umbral
+    mas_concentracion.having 'concentracion > ?', C.umbral
+  end
+
   def calcular_concentracion
     ((self.value - C.corriente) / C.escala) / 1000
+  end
+
+  def pasado?
+    self.calcular_concentracion > C.umbral
   end
 end

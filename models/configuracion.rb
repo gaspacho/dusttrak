@@ -16,4 +16,8 @@ class Configuracion < ActiveRecord::Base
   def self.corriente
     where(atributo: 'corriente').first.valor.to_i
   end
+
+  def self.umbral
+    where(atributo: 'umbral').first.valor.to_f
+  end
 end
