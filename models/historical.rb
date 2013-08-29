@@ -1,9 +1,10 @@
 class Historical < ActiveRecord::Base
   self.table_name = 'historical'
+  C = Configuracion
 
   # TODO sacar de la configuración lo que haga falta
   def self.mas_concentracion
-    select('*, ((value - 2500) / 3.2) / 1000 as "concentracion"')
+    select("*, ((value - #{C.corriente}) / #{C.escala}) / 1000 as 'concentracion'")
   end
 
   # http://forums.mysql.com/read.php?10,174757,176666#msg-176666
@@ -14,8 +15,7 @@ class Historical < ActiveRecord::Base
     group("(60/#{x}) * hour(`timestamp`) + floor(minute(`timestamp`) / #{x})")
   end
 
-  # TODO sacar de la configuración lo que haga falta
   def calcular_concentracion
-    ((self.value - 2500) / 3.2) / 1000
+    ((self.value - C.corriente) / C.escala) / 1000
   end
 end
