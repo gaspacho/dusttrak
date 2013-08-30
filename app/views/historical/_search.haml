@@ -1,0 +1,15 @@
+%form.form-inline{:method => 'get'}
+  .form-group
+    =text_field_tag :desde,
+                    :class => 'form-control datepicker',
+                    :placeholder => "Desde",
+                    :value => @params[:desde]
+  .form-group
+    =text_field_tag :hasta,
+                    :class => 'form-control datepicker',
+                    :placeholder => "Hasta",
+                    :value => @params[:hasta]
+  .form-group
+    =submit_tag "Filtrar", :class => 'btn btn-primary'
+
+=javascript_include_tag 'jquery', 'bootstrap-datepicker', 'init-datepicker'
