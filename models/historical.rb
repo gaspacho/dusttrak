@@ -2,6 +2,8 @@ class Historical < ActiveRecord::Base
   self.table_name = 'historical'
   C = Configuracion
 
+  after_initialize :readonly!
+
   # TODO sacar de la configuración lo que haga falta
   def self.mas_concentracion
     select("*, round(((value - #{C.corriente}) / #{C.escala}) / 1000, 2) as 'concentracion'")
