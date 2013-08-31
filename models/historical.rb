@@ -27,4 +27,14 @@ class Historical < ActiveRecord::Base
   def pasado?
     self.calcular_concentracion > C.umbral
   end
+
+  def self.desde(timestamp)
+    where("`timestamp` > :timestamp",
+          { timestamp: DateTime.parse(timestamp).strftime("%Y-%m-%d 00:00:00")})
+  end
+
+  def self.hasta(timestamp)
+    where("`timestamp` < :timestamp",
+          { timestamp: DateTime.parse(timestamp).strftime("%Y-%m-%d 23:59:59")})
+  end
 end
