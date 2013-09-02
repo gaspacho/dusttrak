@@ -13,6 +13,12 @@
 
 ActiveRecord::Schema.define(:version => 1) do
 
+  create_table "backups", :id => false, :force => true do |t|
+    t.integer "a", :null => false
+    t.integer "b", :null => false
+    t.integer "c", :null => false
+  end
+
   create_table "configuraciones", :force => true do |t|
     t.string "atributo"
     t.string "valor"

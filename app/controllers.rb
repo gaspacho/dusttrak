@@ -1,4 +1,3 @@
-require 'pry'
 Dusttrak::App.controllers  do
   get :index do
     render 'index/index'
