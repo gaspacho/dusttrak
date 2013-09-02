@@ -16,14 +16,8 @@ Dusttrak::App.controllers  do
     render 'historical/all'
   end
 
-  get :threshold do
+  get :above do
     @historical = filtrar(Historical.sobre_umbral)
-
-    render 'historical/all'
-  end
-
-  get :below do
-    @historical = filtrar(Historical.mas_concentracion)
 
     render 'historical/all'
   end
