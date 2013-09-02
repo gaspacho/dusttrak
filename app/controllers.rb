@@ -11,7 +11,7 @@ Dusttrak::App.controllers  do
 
   # Agrupar cada 15 minutos
   get :grouped do
-    @historical = filtrar(Historical.mas_concentracion.cada(Configuracion.grouped))
+    @historical = filtrar(Historical.mas_concentracion_promedio.cada(Configuracion.grouped))
 
     render 'historical/all'
   end
