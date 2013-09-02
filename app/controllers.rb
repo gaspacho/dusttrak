@@ -1,3 +1,4 @@
+require 'pry'
 Dusttrak::App.controllers  do
   get :index do
     render 'index/index'
@@ -17,13 +18,20 @@ Dusttrak::App.controllers  do
   end
 
   get :threshold do
+    @historical = filtrar(Historical.sobre_umbral)
+
+    render 'historical/all'
   end
 
   get :below do
+    @historical = filtrar(Historical.mas_concentracion)
+
+    render 'historical/all'
   end
 
 end
 
+# TODO esto va en helpers
 def filtrar(historical)
   historical = historical.desde(params[:desde]) if params[:desde].present?
   historical = historical.hasta(params[:hasta]) if params[:hasta].present?
