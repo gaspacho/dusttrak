@@ -11,7 +11,7 @@
 
   %tbody
     -@historical.each do |h|
-      %tr.list-row
+      %tr{:class => h.pasado? ? 'list-row danger' : 'list-row' }
         %td.list-column=h.grd_id
         %td.list-column=h.timestamp
         %td.list-column=h.value
