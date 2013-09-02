@@ -15,7 +15,7 @@ class Historical < ActiveRecord::Base
 
   # TODO sacar de la configuración lo que haga falta
   def self.mas_concentracion
-    select("*, round(((value - #{C.corriente}) / #{C.escala}) / 1000, 2) as 'concentracion'")
+    select("*, round(((value - zero) / scale) / 1000, 2) as 'concentracion'")
   end
 
   # http://forums.mysql.com/read.php?10,174757,176666#msg-176666
@@ -32,7 +32,7 @@ class Historical < ActiveRecord::Base
   end
 
   def calcular_concentracion
-    ((self.value - C.corriente) / C.escala) / 1000
+    ((self.value - self.zero) / self.scale) / 1000
   end
 
   def pasado?
