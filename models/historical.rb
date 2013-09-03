@@ -1,4 +1,3 @@
-require 'pry'
 # Definición en la BD (comentado acá porque está ignorado en el esquema)
 #   primary_key "historial_id"
 #   integer     "grd_id",         :null => false
@@ -22,14 +21,12 @@ class Historical < ActiveRecord::Base
   # Generar una consulta como mas_concentracion pero para agrupar y
   # promediar
   def self.mas_concentracion_promedio
-    h = select("count(*) as 'grd_id',
+    select("count(*) as 'grd_id',
             group_concat(zero) as 'zero',
             group_concat(scale) as 'scale',
             `timestamp`,
             group_concat(value) as 'value',
             round(avg(((value - zero) / scale) / 1000), 2) as 'concentracion'")
-    binding.pry
-    h
   end
 
   # http://forums.mysql.com/read.php?10,174757,176666#msg-176666
