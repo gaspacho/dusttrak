@@ -13,10 +13,10 @@
 
   %tbody
     -@historical.each do |h|
-      %tr{:class => h.pasado? ? 'list-row danger' : 'list-row' }
+      %tr.list-row
         %td.list-column=h.grd_id
         %td.list-column=h.timestamp
-        %td.list-column=h.value
+        %td{:class => h.error? ? 'list-column warning' : 'list-column' }=h.value
         %td.list-column=h.zero
         %td.list-column=h.scale
-        %td.list-column=h.concentracion
+        %td{:class => h.pasado? ? 'list-column danger' : 'list-column' }=h.concentracion
