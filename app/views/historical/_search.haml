@@ -4,18 +4,22 @@
                 :collection => @grd,
                 :fields => [ :name, :grd_id ],
                 :placeholder => "Equipo",
-                :value => @params[:grd_id],
+                :value => params[:grd_id],
                 :class => 'form-control'
   .form-group
     =text_field_tag :desde,
                     :class => 'form-control datepicker',
                     :placeholder => "Desde",
-                    :value => @params[:desde]
+                    :value => params[:desde]
   .form-group
     =text_field_tag :hasta,
                     :class => 'form-control datepicker',
                     :placeholder => "Hasta",
-                    :value => @params[:hasta]
+                    :value => params[:hasta]
+  .form-group
+    %label
+      =check_box_tag :xls, value: 1
+      Descargar
   .form-group
     =submit_tag "Filtrar", :class => 'btn btn-primary'
 
