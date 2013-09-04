@@ -50,6 +50,10 @@ class Historical < ActiveRecord::Base
     self.calcular_concentracion > C.umbral
   end
 
+  def error?
+    self.value < self.zero
+  end
+
   def self.desde(timestamp)
     where("`timestamp` > :timestamp",
           { timestamp: DateTime.parse(timestamp).strftime("%Y-%m-%d 00:00:00")})
