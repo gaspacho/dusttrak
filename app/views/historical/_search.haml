@@ -1,5 +1,12 @@
 %form.form-inline{:method => 'get'}
   .form-group
+    =select_tag :grd_id,
+                :collection => @grd,
+                :fields => [ :name, :grd_id ],
+                :placeholder => "Equipo",
+                :value => @params[:grd_id],
+                :class => 'form-control'
+  .form-group
     =text_field_tag :desde,
                     :class => 'form-control datepicker',
                     :placeholder => "Desde",
