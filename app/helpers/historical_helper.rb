@@ -33,7 +33,6 @@ Dusttrak::App.helpers do
     name << " - #{params[:hasta]}" if params[:hasta].present?
 
     file = "public/files/#{Time.now} - #{name}.xls"
-    count = historical.count
 
     begin
       archive = WriteExcel.new(file)
