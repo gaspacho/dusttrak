@@ -4,22 +4,28 @@ Dusttrak::App.controllers  do
   end
 
   get :all do
-    @historical = filtrar(Historical.mas_concentracion)
+    @historical = filtrar(Historical.mas_concentracion).paginate(page: params[:page])
 
-    render 'historical/all'
+    render 'historical/all', :locals => {
+      :bootstrap => BootstrapPagination::Sinatra
+    }
   end
 
   # Agrupar cada 15 minutos
   get :grouped do
-    @historical = filtrar(Historical.mas_concentracion_promedio.cada(Configuracion.grouped))
+    @historical = filtrar(Historical.mas_concentracion_promedio.cada(Configuracion.grouped)).paginate(page: params[:page])
 
-    render 'historical/all'
+    render 'historical/all', :locals => {
+      :bootstrap => BootstrapPagination::Sinatra
+    }
   end
 
   get :above do
-    @historical = filtrar(Historical.sobre_umbral)
+    @historical = filtrar(Historical.sobre_umbral).paginate(page: params[:page])
 
-    render 'historical/all'
+    render 'historical/all', :locals => {
+      :bootstrap => BootstrapPagination::Sinatra
+    }
   end
 
 end
