@@ -15,7 +15,7 @@ class Historical < ActiveRecord::Base
 
   # TODO sacar de la configuración lo que haga falta
   def self.mas_concentracion
-    select("*, round(((value - zero) / scale) / 1000, 2) as 'concentracion'")
+    select("*, round(((value - zero) / scale) / 1000, 3) as 'concentracion'")
   end
 
   # Generar una consulta como mas_concentracion pero para agrupar y
@@ -26,7 +26,7 @@ class Historical < ActiveRecord::Base
             group_concat(scale) as 'scale',
             `timestamp`,
             group_concat(value) as 'value',
-            round(avg(((value - zero) / scale) / 1000), 2) as 'concentracion'")
+            round(avg(((value - zero) / scale) / 1000), 3) as 'concentracion'")
   end
 
   # http://forums.mysql.com/read.php?10,174757,176666#msg-176666
