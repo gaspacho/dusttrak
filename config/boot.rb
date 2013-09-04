@@ -46,6 +46,7 @@ end
 Padrino.after_load do
 # MiniRecord
 #  ActiveRecord::Base.auto_upgrade!
+  require 'will_paginate/active_record'
 end
 
 Padrino.load!

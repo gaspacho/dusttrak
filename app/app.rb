@@ -3,6 +3,7 @@ module Dusttrak
     use ActiveRecord::ConnectionAdapters::ConnectionManagement
     register Padrino::Rendering
     register Padrino::Helpers
+    register WillPaginate::Sinatra
 
     enable :sessions
 
