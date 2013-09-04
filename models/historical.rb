@@ -54,6 +54,10 @@ class Historical < ActiveRecord::Base
     self.value < self.zero
   end
 
+  def self.grd_id(grd_id)
+    where(grd_id: grd_id.to_i)
+  end
+
   def self.desde(timestamp)
     where("`timestamp` > :timestamp",
           { timestamp: DateTime.parse(timestamp).strftime("%Y-%m-%d 00:00:00")})
