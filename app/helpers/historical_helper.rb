@@ -1,6 +1,13 @@
 # Helper methods defined here can be accessed in any controller or view in the application
 
 Dusttrak::App.helpers do
+  def filtrar(historical)
+    historical = historical.grd_id(params[:grd_id]) if params[:grd_id].present?
+    historical = historical.desde(params[:desde]) if params[:desde].present?
+    historical = historical.hasta(params[:hasta]) if params[:hasta].present?
+    historical
+  end
+
   # Devolver todos los grd_id
   def grd
     Historical.select('grd_id, concat(grd_id, " (", count(*), ")") as name').group('grd_id')
