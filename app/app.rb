@@ -36,7 +36,9 @@ module Dusttrak
     # disable :sessions             # Disabled sessions by default (enable if needed)
     # disable :flash                # Disables sinatra-flash (enabled by default if Sinatra::Flash is defined)
     # layout  :my_layout            # Layout can be in views/layouts/foo.ext or views/foo.ext (default :application)
-    #
+
+    # rango de promedio default
+    set :rango, 15
 
     ##
     # You can configure for a specified environment like:
