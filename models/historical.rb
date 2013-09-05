@@ -7,6 +7,8 @@
 #   integer     "value",          :null => false
 #   integer     "historical_type"
 #   timestamp   "insertion_time", :null => false
+#   integer     "zero",           :null => false, :default => 3996
+#   float       "scale",          :null => false, :default => 3.2
 class Historical < ActiveRecord::Base
   self.table_name = 'historical'
   C = Configuracion

@@ -62,7 +62,8 @@ ActiveSupport.escape_html_entities_in_json = false
 
 # Para que nuestro schema no joda con sus tablas
 # TODO para testear hay que cargar historical de alguna manera
-ActiveRecord::SchemaDumper.ignore_tables = %w{ commands reports historical }
+ActiveRecord::SchemaDumper.ignore_tables = %w{commands reports historical
+                                              backups}
 
 # Now we can establish connection with our db.
 ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations[Padrino.env])
