@@ -37,3 +37,6 @@ gem 'pry'
 # Paginacion
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
+
+# Exportar a XLS
+gem 'writeexcel'

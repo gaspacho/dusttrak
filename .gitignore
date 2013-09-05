@@ -1,3 +1,4 @@
+public/files/*
 .bundle/*
 vendor/*
 .DS_Store
