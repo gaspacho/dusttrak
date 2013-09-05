@@ -29,8 +29,8 @@ Dusttrak::App.helpers do
     # TODO mover a filtro_to_s o algo asi para usar en todos lados
     name = "Dusttrak"
     name << " #{params[:grd_id]}" if params[:grd_id].present?
-    name << " #{params[:desde]}" if params[:desde].present?
-    name << " - #{params[:hasta]}" if params[:hasta].present?
+    name << " #{DateTime.parse(params[:desde]).strftime("%Y-%m-%d 00:00:00")}" if params[:desde].present?
+    name << " - #{DateTime.parse(params[:hasta]).strftime("%Y-%m-%d 23:59:59")}" if params[:hasta].present?
 
     file = "public/files/#{Time.now} - #{name}.xls"
 
