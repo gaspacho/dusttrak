@@ -41,23 +41,19 @@ class Historical < ActiveRecord::Base
 
   def self.sobre_umbral
     # dependiente de mysql
-    mas_concentracion.having 'concentracion > ?', C.umbral
+    mas_concentracion.having 'concentracion > ?', Configuracion.umbral
   end
 
   def calcular_concentracion
     ((self.value - self.zero) / self.scale) / 1000
   end
 
-  def pasado?
-    self.calcular_concentracion > C.umbral
+  def sobre_umbral?
+    self.calcular_concentracion > Configuracion.umbral
   end
 
   def error?
     self.value < self.zero
-  end
-
-  def self.grd_id(grd_id)
-    where(grd_id: grd_id.to_i)
   end
 
   def self.desde(timestamp)
