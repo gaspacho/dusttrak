@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 2) do
+ActiveRecord::Schema.define(:version => 3) do
+
+  create_table "aparatos", :force => true do |t|
+    t.string   "nombre"
+    t.text     "observaciones"
+    t.integer  "grd"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
   create_table "configuraciones", :force => true do |t|
     t.float    "umbral",     :default => 0.3
