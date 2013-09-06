@@ -1,2 +1,2 @@
 # Umbral de error default
-Configuracion.create
+Configuracion.create unless Configuracion.any?

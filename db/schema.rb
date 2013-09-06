@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 4) do
+ActiveRecord::Schema.define(:version => 5) do
 
   create_table "aparatos", :force => true do |t|
     t.string   "nombre"
@@ -29,10 +29,10 @@ ActiveRecord::Schema.define(:version => 4) do
 
   create_table "parametros", :force => true do |t|
     t.integer  "aparato_id"
-    t.float    "escala"
-    t.integer  "cero"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.float    "escala",     :default => 3.2
+    t.integer  "cero",       :default => 3996
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
   end
 
 end

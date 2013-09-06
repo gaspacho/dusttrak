@@ -58,6 +58,11 @@ class Historical < ActiveRecord::Base
 
   # Devuelve los parámetros usados durante la toma de la medición
   def parametros
-    self.aparato.parametros.where("created_at < ?", self.timestamp).first
+    if self.aparato.present?
+      self.aparato.parametros.where("created_at < ?", self.timestamp).first
+    else
+      # TODO sacar esto después de arreglar la concentración promedio
+      Parametro.new
+    end
   end
 end

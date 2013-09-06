@@ -11,13 +11,13 @@ Dusttrak::App.helpers do
 
   def render_all(historical)
     if params[:xls].present?
-      file = write_xls(@historical)
+      file = write_xls(historical)
 
       if not file == false
         send_file file, type: 'application/vnd.ms-excel', filename: File.basename(file)
       end
     else
-      @historical = @historical.paginate(page: params[:page])
+      @historical = historical.paginate(page: params[:page])
       @aparatos = Aparato.all
 
       render 'historical/all', :locals => {
