@@ -3,6 +3,11 @@ class Aparato < ActiveRecord::Base
     primary_key: :grd, foreign_key: :grd_id
   has_many :parametros
 
-  accepts_nested_attributes_for :parametros
   validates_uniqueness_of :nombre, :grd
+
+  delegate :cero, :escala, to: :parametro
+
+  def parametro
+    self.parametros.actuales.first
+  end
 end
