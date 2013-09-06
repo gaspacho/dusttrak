@@ -9,6 +9,14 @@ Dusttrak::App.helpers do
     historical
   end
 
+  def rango
+    params[:rango].present? ? params[:rango] : Dusttrak::App.rango
+  end
+
+  def mostrar_rango?
+    @rango
+  end
+
   def render_all(historical)
     if params[:xls].present?
       file = write_xls(historical)

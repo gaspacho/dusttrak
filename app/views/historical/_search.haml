@@ -16,6 +16,9 @@
                     :class => 'form-control datepicker',
                     :placeholder => "Hasta",
                     :value => params[:hasta]
+
+  = partial 'historical/rango' if mostrar_rango?
+
   .form-group
     %label
       =check_box_tag :xls, value: 1
