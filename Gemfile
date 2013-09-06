@@ -15,8 +15,9 @@ gem 'rake'
 
 # Component requirements
 gem 'haml'
-gem 'activerecord', :require => 'active_record'
+gem 'activerecord', require: 'active_record'
 gem 'mysql2'
+gem 'bcrypt-ruby', require: 'bcrypt'
 
 # Test requirements
 
