@@ -10,7 +10,8 @@ Dusttrak::App.controllers  do
 
   # Agrupar cada 15 minutos
   get :grouped do
-    render_all filtrar(Historical.mas_concentracion_promedio.cada(Configuracion.grouped))
+    @rango = true
+    render_all filtrar(Historical.mas_concentracion_promedio.cada(rango))
   end
 
   get :above do
