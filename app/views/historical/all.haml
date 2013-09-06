@@ -18,7 +18,7 @@
       %tr.list-row
         %td.list-column=h.grd_id
         %td.list-column=h.timestamp
-        %td{:class => h.error? ? 'list-column warning' : 'list-column' }=h.value
-        %td.list-column=h.zero
-        %td.list-column=h.scale
-        %td{:class => h.pasado? ? 'list-column danger' : 'list-column' }=h.concentracion
+        %td{class: h.error? ? 'list-column warning' : 'list-column' }=h.value
+        %td.list-column=h.parametros.cero
+        %td.list-column=h.parametros.escala
+        %td{class: h.sobre_umbral? ? 'list-column danger' : 'list-column' }=h.concentracion

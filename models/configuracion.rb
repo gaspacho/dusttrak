@@ -1,23 +1,17 @@
+# encoding: utf-8
 class Configuracion < ActiveRecord::Base
-  validates_uniqueness_of :atributo
+  # Devuelve la última configuración creada
+  def self.actual
+    order('created_at desc').limit(1)
+  end
 
   # Rango de tiempo en minutos según el que agrupar
   # TODO descipayar grouped
   def self.grouped
-    where(atributo: 'grouped').first.valor.to_f
-  end
-
-  # Valor de E
-  def self.escala
-    where(atributo: 'escala').first.valor.to_f
-  end
-
-  # Corriente en µA (I)
-  def self.corriente
-    where(atributo: 'corriente').first.valor.to_i
+    Dusttrak::App.rango
   end
 
   def self.umbral
-    where(atributo: 'umbral').first.valor.to_f
+    actual.first.umbral
   end
 end

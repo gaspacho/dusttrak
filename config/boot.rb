@@ -44,9 +44,8 @@ end
 # Add your after (RE)load hooks here
 #
 Padrino.after_load do
-# MiniRecord
-#  ActiveRecord::Base.auto_upgrade!
   require 'will_paginate/active_record'
+  require 'will_paginate/array'
 end
 
 Padrino.load!

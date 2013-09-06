@@ -1,21 +1,24 @@
 # Helper methods defined here can be accessed in any controller or view in the application
-
 Dusttrak::App.helpers do
-  # Devolver todos los grd_id
-  def grd
-    Historical.select('grd_id, concat(grd_id, " (", count(*), ")") as name').group('grd_id')
+
+  # Filtra los históricos de acuerdo a los parámetros de la vista.
+  def filtrar(historical)
+    historical = historical.where(grd_id: params[:grd_id]) if params[:grd_id].present?
+    historical = historical.desde(params[:desde]) if params[:desde].present?
+    historical = historical.hasta(params[:hasta]) if params[:hasta].present?
+    historical
   end
 
   def render_all(historical)
     if params[:xls].present?
-      file = write_xls(@historical)
+      file = write_xls(historical)
 
       if not file == false
         send_file file, type: 'application/vnd.ms-excel', filename: File.basename(file)
       end
     else
-      @historical = @historical.paginate(page: params[:page])
-      @grd = grd
+      @historical = historical.paginate(page: params[:page])
+      @aparatos = Aparato.all
 
       render 'historical/all', :locals => {
         :bootstrap => BootstrapPagination::Sinatra

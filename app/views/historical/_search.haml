@@ -1,9 +1,9 @@
 %form.form-inline{:method => 'get'}
   .form-group
     =select_tag :grd_id,
-                :collection => @grd,
-                :fields => [ :name, :grd_id ],
-                :placeholder => "Equipo",
+                :collection => @aparatos,
+                :fields => [ :nombre, :grd ],
+                :placeholder => "Aparato",
                 :value => params[:grd_id],
                 :class => 'form-control'
   .form-group
