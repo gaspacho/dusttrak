@@ -10,15 +10,10 @@
 class Historical < ActiveRecord::Base
   self.table_name = 'historical'
 
-  belongs_to :aparato, inverse_of: :mediciones,
+  belongs_to :aparato, inverse_of: :mediciones, include: [:parametros],
     primary_key: :grd, foreign_key: :grd_id
 
   after_initialize :readonly!
-
-  # TODO sacar de la configuración lo que haga falta
-  def self.mas_concentracion
-    select("*, round(((value - zero) / scale) / 1000, 3) as 'concentracion'")
-  end
 
   # Generar una consulta como mas_concentracion pero para agrupar y
   # promediar
@@ -39,30 +34,30 @@ class Historical < ActiveRecord::Base
     group("(60/#{x}) * hour(`timestamp`) + floor(minute(`timestamp`) / #{x})")
   end
 
-  def self.sobre_umbral
-    # dependiente de mysql
-    mas_concentracion.having 'concentracion > ?', Configuracion.umbral
-  end
-
-  def calcular_concentracion
-    ((self.value - self.zero) / self.scale) / 1000
-  end
-
-  def sobre_umbral?
-    self.calcular_concentracion > Configuracion.umbral
-  end
-
-  def error?
-    self.value < self.zero
-  end
-
   def self.desde(timestamp)
-    where("`timestamp` > :timestamp",
-          { timestamp: DateTime.parse(timestamp).strftime("%Y-%m-%d 00:00:00")})
+    where "`timestamp` > ?",
+      DateTime.parse(timestamp).strftime("%Y-%m-%d 00:00:00")
   end
 
   def self.hasta(timestamp)
-    where("`timestamp` < :timestamp",
-          { timestamp: DateTime.parse(timestamp).strftime("%Y-%m-%d 23:59:59")})
+    where "`timestamp` < ?",
+      DateTime.parse(timestamp).strftime("%Y-%m-%d 23:59:59")
+  end
+
+  def concentracion
+    (((self.value - parametros.cero) / parametros.escala) / 1000).round(3)
+  end
+
+  def sobre_umbral?
+    self.concentracion > Configuracion.umbral
+  end
+
+  def error?
+    self.value < parametros.cero
+  end
+
+  # Devuelve los parámetros usados durante la toma de la medición
+  def parametros
+    self.aparato.parametros.where("created_at < ?", self.timestamp).first
   end
 end
