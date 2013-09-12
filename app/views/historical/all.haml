@@ -1,0 +1,24 @@
+-# encoding: utf-8
+=partial 'historical/search'
+
+=(will_paginate(@historical, renderer: bootstrap, bootstrap: 3) || "").html_safe
+
+%table#list.table.table-striped.table-hover.table-condensed
+  %thead
+    %tr
+      %th.header Id
+      %th.header Fecha
+      %th.header Valor
+      %th.header Cero
+      %th.header Escala
+      %th.header Concentración mg/m3
+
+  %tbody
+    -@historical.each do |h|
+      %tr.list-row
+        %td.list-column=h.grd_id
+        %td.list-column=h.timestamp
+        %td{class: h.error? ? 'list-column warning' : 'list-column' }=h.value
+        %td.list-column=h.parametros.cero
+        %td.list-column=h.parametros.escala
+        %td{class: h.sobre_umbral? ? 'list-column danger' : 'list-column' }=h.concentracion
